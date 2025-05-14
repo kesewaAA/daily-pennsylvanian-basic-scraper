@@ -15,25 +15,30 @@ import loguru
 
 def scrape_data_point():
     """
-    Scrapes the main headline from The Daily Pennsylvanian home page.
+    Scrapes the first headline from the Opinion section of The Daily Pennsylvanian.
 
     Returns:
         str: The headline text if found, otherwise an empty string.
     """
-    headers = {
-    "User-Agent": "cis3500-scraper"
-    }
-    req = requests.get("https://www.thedp.com", headers=headers)
-
-    loguru.logger.info(f"Request URL: {req.url}")
-    loguru.logger.info(f"Request status code: {req.status_code}")
+    try:
+        req = requests.get("https://www.thedp.com/section/opinion")
+        loguru.logger.info(f"Request URL: {req.url}")
+        loguru.logger.info(f"Request status code: {req.status_code}")
+    except Exception as e:
+        loguru.logger.error(f"Request failed: {e}")
+        return ""
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        target_element = soup.find("a", class_="frontpage-link large-link")
-        data_point = "" if target_element is None else target_element.text
-        loguru.logger.info(f"Data point: {data_point}")
-        return data_point
+        headline_tag = soup.find("a", class_="headline-link")  # Adjust this class if needed
+        if headline_tag:
+            headline = headline_tag.get_text(strip=True)
+            loguru.logger.info(f"Opinion headline: {headline}")
+            return headline
+        else:
+            loguru.logger.warning("No opinion headline found")
+    return ""
+
 
 
 if __name__ == "__main__":
