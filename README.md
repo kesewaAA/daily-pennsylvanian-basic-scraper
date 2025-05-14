@@ -17,4 +17,4 @@ This software is distributed under the terms of the MIT License. You have the fr
 
 
 ## Ethical considerations
-
+The scraper adheres to the robot.txt file requirements by the daily pennsylvanian
