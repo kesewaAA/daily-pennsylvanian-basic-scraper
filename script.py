@@ -30,7 +30,7 @@ def scrape_data_point():
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        headline_tag = soup.find("a", class_="standard-link")  
+        headline_tag = soup.find("h3", class_="standard-link")  
         if headline_tag:
             headline = headline_tag.get_text(strip=True)
             loguru.logger.info(f"Opinion headline: {headline}")
