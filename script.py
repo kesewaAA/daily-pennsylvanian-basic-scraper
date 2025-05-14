@@ -20,23 +20,20 @@ def scrape_data_point():
     Returns:
         str: The headline text if found, otherwise an empty string.
     """
-    try:
-        req = requests.get("https://www.thedp.com/section/opinion")
-        loguru.logger.info(f"Request URL: {req.url}")
-        loguru.logger.info(f"Request status code: {req.status_code}")
-    except Exception as e:
-        loguru.logger.error(f"Request failed: {e}")
-        return ""
+    req = requests.get("https://www.thedp.com/section/opinion")
+    loguru.logger.info(f"Request URL: {req.url}")
+    loguru.logger.info(f"Request status code: {req.status_code}")
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        headline_tag = soup.select_one("h3.standard-link > a") 
-        if headline_tag:
-            headline = headline_tag.get_text(strip=True)
+        headline_element = soup.find("h3", class_="standard-link")
+        if headline_element and headline_element.a:
+            headline = headline_element.a.get_text(strip=True)
             loguru.logger.info(f"Opinion headline: {headline}")
             return headline
         else:
             loguru.logger.warning("No opinion headline found")
+
     return ""
 
 
