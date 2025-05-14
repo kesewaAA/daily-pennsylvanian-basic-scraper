@@ -27,13 +27,14 @@ def scrape_data_point():
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
         headline_element = soup.find("h3", class_="standard-link")
-        if headline_element 
+        if headline_element is None
+            loguru.logger.warning("No opinion headline found")
+            return ""
+        else:
             headline = headline_element.text
             loguru.logger.info(f"Opinion headline: {headline}")
             return headline
-        else:
-            loguru.logger.warning("No opinion headline found")
-            return ""
+            
 
 
 
