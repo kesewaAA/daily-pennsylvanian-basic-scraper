@@ -1,23 +1,14 @@
 # Daily Pennsylvanian Scraper
+This is a web scraper that scrapes the daily pennsylvanian for opinion news article headlines. 
 
-
-
-## Overview 
-
-The workflow defined in `.github/workflows/scrape.yaml` runs on a defined schedule to:
-
-1. Checkout the code
-2. Set up the Python environment
-3. Install dependencies via Pipenv
-4. Run the python script `script.py` to scrape data
-5. Commit any updated data files to the Git repository
-
-## Modifications
-
-
+## Overview / Modifications
+I modified the original scraper such that instead of scraping "a" headlines directly from the dp.com link,
+it scrapes the heading "h3" under class "standard-link" from the ".../section/opinion" link of the daily pennsylvanian.
+I opted to get opinion insights as I thought this would be interesting and the headlines are usually constructed in 
+an eye-catching manner
 
 ## Cron Syntax
-
+'0 20 * * *' refers to minute 0, at 20:00 hour, '*' every day of the month,  '*' every month and  '*' every week. Thus it essentially means that the workflow will run at 8:00pm daily. 
 
 
 ## Licensing
